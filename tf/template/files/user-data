@@ -1,0 +1,8 @@
+#cloud-config
+runcmd:
+   - cloud-init clean
+   - SUSEConnect -d
+   - SUSEConnect --cleanup
+   - clone-master-clean-up
+   - halt -p
+   

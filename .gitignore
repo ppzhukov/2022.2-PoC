@@ -1,0 +1,16 @@
+# Local .terraform directories
+**.terraform*
+**.terraform.lock.hcl
+**/*.vmdk
+*.tfstate
+*.tfstate.*
+**crash.log
+**/*.tfvars
+!**example.tfvars
+**override.tf
+**override.tf.json
+**/*_override.tf
+**/*_override.tf.json
+**/*.zip
+**/id_rsa
+**/id_rsa.pub

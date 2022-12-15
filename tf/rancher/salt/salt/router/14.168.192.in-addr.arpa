@@ -1,0 +1,11 @@
+$TTL 2D
+@		IN SOA		router.stend.test.	root.router.stend.test. (
+                2019031800	; serial
+                3H		; refresh
+                1H		; retry
+                1W		; expiry
+                1D )		; minimum
+14.168.192.in-addr.arpa.	IN NS		stend.test.
+1.14.168.192.in-addr.arpa.	IN PTR		router.stend.test.
+
+

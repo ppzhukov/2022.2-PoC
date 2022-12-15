@@ -1,0 +1,16 @@
+$TTL 2d
+@		IN SOA		router.stend.test.	root.router.stend.test. (
+                2019031800	; serial
+                3h		; refresh
+                1h		; retry
+                1w		; expiry
+                1d )		; minimum
+stend.test.	IN NS		ns.stend.test.
+ns		IN A		192.168.14.1
+router  IN A		192.168.14.1
+ntp		IN A		192.168.14.1
+@		IN A		192.168.14.1
+rancher IN A        192.168.14.21
+rancher IN A        192.168.14.22
+rancher IN A        192.168.14.23
+

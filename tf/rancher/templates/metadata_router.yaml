@@ -1,0 +1,17 @@
+#cloud-config
+local-hostname: ${hostname}
+instance-id: ${hostname}
+network:
+  version: 2
+  ethernets:
+    eth0:
+      addresses:
+        - ${ip_address}/${netmask}
+      nameservers:
+        addresses: ${nameservers}
+    eth1:
+      addresses:
+        - ${wan_ip_address}/${wan_netmask}
+      gateway4: ${wan_gateway}
+      nameservers:
+        addresses: ${wan_nameservers}

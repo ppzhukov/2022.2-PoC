@@ -1,0 +1,24 @@
+#cloud-config
+users:
+  - name: ${username}
+    ssh-authorized-keys:
+      - ${ssh_public_key}
+      - ${tf_ssh_public_key}
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo
+    shell: /bin/bash
+
+write_files:
+#Minion config
+  - encoding: b64
+    content: ${salt_conf}
+    path: /etc/salt/minion.d/minion.conf
+    permissions: '0644'
+    owner: root:root
+  - encoding: b64
+    content: ${salt_autosign_grains_conf}
+    path: /etc/salt/minion.d/autosign-grains.conf
+    permissions: '0644'
+    owner: root:root
+runcmd:
+${runcmd}

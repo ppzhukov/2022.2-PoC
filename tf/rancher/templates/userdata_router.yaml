@@ -1,0 +1,74 @@
+#cloud-config
+users:
+  - name: ${username}
+    ssh-authorized-keys:
+      - ${ssh_public_key}
+      - ${tf_ssh_public_key}
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo
+    shell: /bin/bash
+  
+write_files:
+#Salt States
+  - encoding: b64
+    content: ${salt_reactor_start}
+    path: /srv/reactor/start.sls
+    permissions: '0644'
+    owner: root:salt
+  - encoding: b64
+    content: ${salt_reactor_delkey}
+    path: /srv/reactor/delkey.sls
+    permissions: '0644'
+    owner: root:salt    
+  - encoding: b64
+    content: ${salt_zip}
+    path: /srv/salt.zip
+    permissions: '0644'
+    owner: root:salt
+  - path: /srv/salt/registration.sls
+    content: |
+        registration_sles:
+            cmd.run:
+              - name: |
+                  if [ "$(echo $(SUSEConnect --status-text | grep -A 2 '(SLES/15.4/x86_64)' | tail -1))" = "Not Registered" ]
+                    then
+                      ping updates.suse.com -c 10
+                      ${registration_cmd} > /var/log/registration.log 2>&1
+                      zypper ref
+                  fi
+  - encoding: b64
+    content: ${id_rsa}
+    path: /srv/salt/ssh/id_rsa.pub
+    permissions: '0644'
+    owner: root:salt
+  - encoding: b64
+    content: ${tf_id_rsa}
+    path: /srv/salt/ssh/tf_id_rsa.pub
+    permissions: '0644'
+    owner: root:salt
+
+#Master config
+  - encoding: b64
+    content: ${salt_master_conf}
+    path: /etc/salt/master.d/master.conf
+    permissions: '0644'
+    owner: root:root
+  - encoding: b64
+    content: ${salt_autosign_key}
+    path: /etc/salt/autosign_grains/autosign_key
+    permissions: '0644'
+    owner: root:root
+#Minion config
+  - encoding: b64
+    content: ${salt_minion_conf}
+    path: /etc/salt/minion.d/minion.conf
+    permissions: '0644'
+    owner: root:root
+  - encoding: b64
+    content: ${salt_autosign_grains_conf}
+    path: /etc/salt/minion.d/autosign-grains.conf
+    permissions: '0644'
+    owner: root:root
+
+runcmd:
+${runcmd}
