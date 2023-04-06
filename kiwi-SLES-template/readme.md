@@ -7,6 +7,10 @@ sudo SUSEConnect --product sle-module-development-tools/15.4/x86_64
 sudo zypper install -y python3-kiwi
 sudo zypper in -y kiwi-templates-Minimal
 ```
+2. Install utilites for kiwi.
+```bash
+sudo zypper install -y qemu-tools gptfdisk kpartx dosfstools btrfsprogs
+```
 4. Download SUSE SLES 15SP4 full iso.
 ```
 SLE-15-SP4-Full-x86_64-GM-Media1.iso
