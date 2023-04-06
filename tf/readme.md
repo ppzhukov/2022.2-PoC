@@ -22,6 +22,8 @@ terraform -chdir=./template apply -auto-approve -var-file ../your.tfvars
 6. Run
 ```bash
 cd ./tf
+mkdir rancher/files/
+touch rancher/files/salt.zip
 terraform -chdir=./rancher init
 terraform -chdir=./rancher plan -var-file ../your.tfvars
 terraform -chdir=./rancher apply -auto-approve -var-file ../your.tfvars
