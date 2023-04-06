@@ -56,6 +56,7 @@ sudo salt -C "G@roles:rancher" cmd.run 'systemctl enable rke2-server --now'
 
 ```bash
 curl -L https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl -o ~/bin/kubectl
+chmod +x ~/bin/kubectl
 
 scp 192.168.14.21:/etc/rancher/rke2/rke2.yaml kubeconfig-rancher.yaml
 sed -i 's/127.0.0.1/192.168.14.21/' ./kubeconfig-rancher.yaml
