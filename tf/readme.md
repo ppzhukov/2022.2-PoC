@@ -75,7 +75,9 @@ helm install cert-manager jetstack/cert-manager \
   --create-namespace \
   --version v1.7.1
 
-
+kubectl rollout status deployment cert-manager -n cert-manager
+kubectl rollout status deployment cert-manager-cainjector -n cert-manager
+kubectl rollout status deployment cert-manager-webhook -n cert-manager
 
 helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 
