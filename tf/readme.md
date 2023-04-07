@@ -89,9 +89,12 @@ helm install rancher rancher-stable/rancher \
   --set hostname=192.168.14.21.sslip.io \
   --version 2.6.8
 ```
-
-kubectl rollout status deployment rancher -n cattle-system
-
+```
+--set replicas=3
+```
+```bash
+kubectl -n cattle-system rollout status deploy/rancher
+```
 
 
 
