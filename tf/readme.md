@@ -90,7 +90,7 @@ helm install rancher rancher-stable/rancher \
   --version 2.6.8
 ```
 
-
+kubectl rollout status deployment rancher -n cattle-system
 
 
 
