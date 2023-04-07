@@ -108,6 +108,8 @@ helm install rancher rancher-stable/rancher \
 
 # Main
 
+https://helm.sh/docs/topics/version_skew/
+
 ## Using as standalone Terraform configuration
 
 The configuration is done through Terraform variables. Example *tfvars* file is part of this repo and is named `example.tfvars`. Change the variables to match your environment / requirements before running `terraform apply ...`.
