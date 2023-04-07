@@ -117,7 +117,33 @@ resource "null_resource" "wait_cloud_init_rancher" {
  provisioner "remote-exec" {
    inline = [
            "sudo cloud-init status --wait",
+           "sudo salt-call state.apply queue=True",
    ]
  }
 }
+
+resource "null_resource" "rke2_install" {
+ depends_on = [resource.null_resource.wait_cloud_init_rancher]
+ count = length(var.rancher_nodes_ip)
+ connection {
+   type        = "ssh"
+   user        = "${var.nodes_settings.username}"
+   private_key = base64decode(var.tf_ssh_key.private_key_b64)
+   host        = var.nodes_settings.wan_router_ip
+#    bastion_host = var.nodes_settings.wan_router_ip
+#    bastion_private_key = "${var.tf_ssh_key.private_key_b64}"
+ }
+ provisioner "file" {
+    source      = "rke2.sh"
+    destination = "/tmp/rke2.sh"
+ }
+ 
+ provisioner "remote-exec" {
+   inline = [
+           "sudo chmod +x /tmp/rke2.sh",
+           "sudo /tmp/rke2.sh",
+   ]
+ }
+}
+
 

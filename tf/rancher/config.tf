@@ -11,7 +11,6 @@ EOT
   runcmd_minion = <<EOT
    - systemctl enable salt-minion --now
    - sleep 30
-   - salt-call state.apply
 EOT
 
   minion_conf = file("${path.module}/salt/minion/minion.conf")
