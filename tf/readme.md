@@ -22,6 +22,8 @@ terraform -chdir=./template apply -auto-approve -var-file ../your.tfvars
 6. Run
 ```bash
 cd ./tf
+mkdir rancher/files/
+touch rancher/files/salt.zip
 terraform -chdir=./rancher init
 terraform -chdir=./rancher plan -var-file ../your.tfvars
 terraform -chdir=./rancher apply -auto-approve -var-file ../your.tfvars
@@ -54,6 +56,7 @@ sudo salt -C "G@roles:rancher" cmd.run 'systemctl enable rke2-server --now'
 
 ```bash
 curl -L https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl -o ~/bin/kubectl
+chmod +x ~/bin/kubectl
 
 scp 192.168.14.21:/etc/rancher/rke2/rke2.yaml kubeconfig-rancher.yaml
 sed -i 's/127.0.0.1/192.168.14.21/' ./kubeconfig-rancher.yaml
@@ -72,7 +75,9 @@ helm install cert-manager jetstack/cert-manager \
   --create-namespace \
   --version v1.7.1
 
-
+kubectl rollout status deployment cert-manager -n cert-manager
+kubectl rollout status deployment cert-manager-cainjector -n cert-manager
+kubectl rollout status deployment cert-manager-webhook -n cert-manager
 
 helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 
@@ -84,9 +89,12 @@ helm install rancher rancher-stable/rancher \
   --set hostname=192.168.14.21.sslip.io \
   --version 2.6.8
 ```
-
-
-
+```
+--set replicas=3
+```
+```bash
+kubectl -n cattle-system rollout status deploy/rancher
+```
 
 
 
@@ -104,6 +112,8 @@ helm install rancher rancher-stable/rancher \
 
 
 # Main
+
+https://helm.sh/docs/topics/version_skew/
 
 ## Using as standalone Terraform configuration
 

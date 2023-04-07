@@ -34,5 +34,5 @@ template = {
     template_name       = "SLES15SP4-minimal"
     vmdk_file_name      = "SLES15-SP4-Minimal-Rancher.x86_64-15.4.0.vmdk"
     network_name        = "VM Network"
-    folder              = "Rancher"
+    folder              = "rancher"
 }
