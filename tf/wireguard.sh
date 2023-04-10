@@ -58,7 +58,7 @@ sudo wg show
 
 ### Configure Firewall
 
-sudo firewall-cmd --zone=external --permanent --add-port=51820/tcp 
-sudo firewall-cmd --permanent --zone=internal --add-interface=wg0
-sudo firewall-cmd --permanent --add-masquerade --zone=internal
+sudo firewall-cmd --zone=external --permanent --add-port=51820/udp 
+#sudo firewall-cmd --permanent --zone=internal --add-interface=wg0
+#sudo firewall-cmd --permanent --add-masquerade --zone=internal
 sudo systemctl restart firewalld
